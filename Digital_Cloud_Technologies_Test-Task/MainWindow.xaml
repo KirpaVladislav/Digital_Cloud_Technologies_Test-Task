@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="358,315,0,0" x:Name="MainButton" VerticalAlignment="Top" Click="MainButton_Click"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="CoinsDataGrid" AutoGenerateColumns ="True"  Margin="10,0,0,170"/>
 
     </Grid>
 </Window>
