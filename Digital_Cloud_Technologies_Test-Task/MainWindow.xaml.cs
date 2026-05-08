@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace Digital_Cloud_Technologies_Test_Task
 {
@@ -18,6 +19,7 @@ namespace Digital_Cloud_Technologies_Test_Task
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Coin>? Coins = new List<Coin>();
         public MainWindow()
         {
             InitializeComponent();
@@ -35,11 +37,11 @@ namespace Digital_Cloud_Technologies_Test_Task
                 coingeckoClient.DefaultRequestHeaders.Add("x-cg-demo-api-key", key);
                 string jsonResult = await coingeckoClient.GetStringAsync(url);
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                List<Coin>? coins = JsonSerializer.Deserialize<List<Coin>>(jsonResult, options);
+                Coins = JsonSerializer.Deserialize<List<Coin>>(jsonResult, options);
 
-                if(coins != null)
+                if(Coins != null)
                 {
-                    CoinsDataGrid.ItemsSource = coins;
+                    CoinsDataGrid.ItemsSource = Coins;
                 }
 
                 
@@ -47,6 +49,23 @@ namespace Digital_Cloud_Technologies_Test_Task
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
+        }
+
+        private void FindButton_Click(object sender, RoutedEventArgs e)
+        {
+            string TextFind = SearchField.Text.Trim().ToLower();
+
+            //If field is empty, return the entire list
+            if (string.IsNullOrEmpty(TextFind) )
+            {
+                CoinsDataGrid.ItemsSource = Coins;
+                return;
+            }
+
+            //filter, search by name or symbol
+            var filter = Coins.Where(c => (c.name != null && c.name.ToLower().Contains(TextFind)) || 
+                                   (c.symbol != null && c.symbol.ToLower().Contains(TextFind))).ToList();
+                CoinsDataGrid.ItemsSource = filter;
         }
     }
 }

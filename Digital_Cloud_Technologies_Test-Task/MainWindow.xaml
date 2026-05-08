@@ -7,8 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="358,315,0,0" x:Name="MainButton" VerticalAlignment="Top" Click="MainButton_Click"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="CoinsDataGrid" AutoGenerateColumns ="True"  Margin="10,0,0,170"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="303*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Підключити" HorizontalAlignment="Left" Margin="0,313,0,0" x:Name="MainButton" VerticalAlignment="Top" Click="MainButton_Click" Height="82" Width="155"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="CoinsDataGrid" AutoGenerateColumns ="True"  Margin="10,0,0,170" Grid.ColumnSpan="2"/>
+
+        <Button Grid.Column="1" Content="Знайти" x:Name="FindButton" Margin="438,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.011,0.259" Click="FindButton_Click"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" x:Name="SearchField" Margin="438,342,0,0" TextWrapping="Wrap" Text="Введіть назву для пошуку" VerticalAlignment="Top" Width="168"/>
 
     </Grid>
 </Window>
